@@ -1,0 +1,103 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+	<title th:text="#{offerPosition.label.plural}+' - '+#{offerPosition.edit.label}"></title>
+</head>
+<body th:with="menu='offerPosition'">
+
+	<div layout:fragment="breadcrumb">
+		<ol class="breadcrumb">
+			<li>
+				<a th:href="@{/offerposition/list}" th:text="#{offerPosition.label.plural}">Offer positions</a>
+			</li>
+			<li class="active">
+				<strong th:text="#{default.button.edit.label}">Edit</strong><strong>:</strong>
+				<span th:text="${offerPosition.nameIntern}">[nameIntern]</span>
+			</li>
+		</ol>
+		<h1>
+			<span th:text="#{offerPosition.edit.label}">Edit offer position</span>:
+			<span class="text-muted" th:text="${offerPosition.nameIntern}">[nameIntern]</span>
+		</h1>
+	</div>
+
+	<div layout:fragment="content">
+		
+		<form class="form-horizontal" th:object="${offerPosition}" th:action="@{/offerposition/update}" action="#" method="post">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="form-group" th:classappend="${#fields.hasErrors('nameOffer')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span class="required">*</span>
+					<span th:text="#{offerPosition.nameOffer.label}">Name (offer)</span>
+				</label>
+				<div class="col-md-10">
+					<input type="text" th:field="*{nameOffer}" class="form-control">
+					<small class="help-block" th:if="${#fields.hasErrors('nameOffer')}" th:each="err : ${#fields.errors('nameOffer')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('nameIntern')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span th:text="#{offerPosition.nameIntern.label}">Name (intern)</span>
+				</label>
+				<div class="col-md-10">
+					<input type="text" th:field="*{nameIntern}" class="form-control">
+					<small class="help-block" th:if="${#fields.hasErrors('nameIntern')}" th:each="err : ${#fields.errors('nameIntern')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('packingUnit')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span class="required">*</span>
+					<span th:text="#{offerPosition.packingUnit.label}">Packing unit</span>
+				</label>
+				<div class="col-md-10">
+					<input type="text" th:field="*{packingUnit}" class="form-control">
+					<small class="help-block" th:if="${#fields.hasErrors('packingUnit')}" th:each="err : ${#fields.errors('packingUnit')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('price')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span class="required">*</span>
+					<span th:text="#{offerPosition.price.label}">Price</span>
+				</label>
+				<div class="col-md-10">
+					<input type="text" th:field="*{price}" class="form-control">
+					<small class="help-block" th:if="${#fields.hasErrors('price')}" th:each="err : ${#fields.errors('price')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('offerNumber')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span class="required">*</span>
+					<span th:text="#{offerPosition.offerNumber.label}">Offer number</span>
+				</label>
+				<div class="col-md-10">
+					<input type="text" th:field="*{offerNumber}" class="form-control">
+					<small class="help-block" th:if="${#fields.hasErrors('offerNumber')}" th:each="err : ${#fields.errors('offerNumber')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group" th:classappend="${#fields.hasErrors('vendor')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span class="required">*</span>
+					<span th:text="#{offerPosition.vendor.label}">Vendor</span>
+				</label>
+				<div class="col-md-10">
+					<select th:field="*{vendor}" class="form-control">
+						<option th:each="comp : ${allUnarchivedCompanies}" th:value="${{comp}}" th:text="${comp.name}"></option>
+						<optgroup th:label="#{company.archived.label}" th:if="${not #lists.isEmpty(allArchivedCompanies)}">
+							<option th:each="comp : ${allArchivedCompanies}" th:value="${{comp}}" th:text="${comp.name}"></option>
+						</optgroup>
+					</select>
+					<small class="help-block" th:if="${#fields.hasErrors('vendor')}" th:each="err : ${#fields.errors('vendor')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10 col-md-offset-2">
+					<input type="submit" class="btn btn-primary" th:value="#{default.button.save.label}">
+					<a th:href="@{/offerposition/list}" class="btn btn-default" th:text="#{default.button.cancel.label}">Cancel</a>
+				</div>
+			</div>
+		</form>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout">
+<head>
+	<title th:text="#{company.label.plural}+' - '+#{company.add.label}"></title>
+</head>
+<body th:with="menu='admin',submenu='company'">
+
+	<div layout:fragment="breadcrumb">
+		<ol class="breadcrumb">
+			<li>
+				<a th:href="@{/company/list}" th:text="#{company.label.plural}">Companies</a>
+			</li>
+			<li class="active">
+				<strong th:text="#{company.add.label}">Add</strong>
+			</li>
+		</ol>
+		<h1 th:text="#{company.add.label}">Add company</h1>
+	</div>
+
+	<div layout:fragment="content">
+					
+		<form class="form-horizontal" th:object="${company}" th:action="@{/company/save}" action="#" method="post">
+			<input type="hidden" th:field="*{archived}"/>
+			<div class="form-group" th:classappend="${#fields.hasErrors('name')} ? has-error">
+				<label class="col-md-2 control-label">
+					<span class="required">*</span>
+					<span th:text="#{company.name.label}">Name</span>
+				</label>
+				<div class="col-md-10">
+					<input type="text" th:field="*{name}" class="form-control">
+					<small class="help-block" th:if="${#fields.hasErrors('name')}" th:each="err : ${#fields.errors('name')}" th:text="${err}">validation error</small>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">
+					<span th:text="#{company.vendor.label}">Vendor</span>
+				</label>
+				<div class="col-md-10">
+					<input type="checkbox" th:field="*{vendor}" class="bootstrap-switch">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-10 col-md-offset-2">
+					<input type="submit" class="btn btn-primary" th:value="#{default.button.save.label}">
+					<a th:href="@{/company/list}" class="btn btn-default" th:text="#{default.button.cancel.label}">Cancel</a>
+				</div>
+			</div>
+		</form>
+
+	</div>
+
+</body>
+</html>

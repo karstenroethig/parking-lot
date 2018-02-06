@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<!-- =========== -->
+	<!-- insert data -->
+	<!-- =========== -->
+	<changeSet id="1" author="roethig">
+
+		<!-- =============== -->
+		<!-- Table "Company" -->
+		<!-- =============== -->
+		<loadData
+			tableName="Company"
+			file="db/data/companies.csv"
+			separator=";">
+		</loadData>
+		
+		<!-- ====================== -->
+		<!-- Table "Offer_Position" -->
+		<!-- ====================== -->
+		<insert tableName="Offer_Position">
+			<column name="name_offer">Sechskantmutter MU-6KT-DIN934-I8I-SW17-(A2K)-M10</column>
+			<!--column name="name_intern"></column-->
+			<column name="packing_unit">100</column>
+			<column name="price">1.60</column>
+			<column name="offer_number">115504474</column>
+			<column name="vendor_id" valueNumeric="select id from Company where name = 'Musterfirma GmbH'"/>
+		</insert>
+
+	</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+	<env name="APP_ACTIVE_PROFILE" value="dev" />
+	<env name="APP_JMX_PORT" value="55568" />
+
+	<id>${dist.service.id}</id>
+	<name>${dist.service.name}</name>
+	<description>${dist.service.description}</description>
+
+	<executable>java</executable>
+	<startargument>-Xrs</startargument>
+	<startargument>-Xmx256m</startargument>
+	<startargument>-Djava.io.tmpdir=%BASE%/../temp/</startargument>
+	<startargument>-Dcom.sun.management.jmxremote.port=%APP_JMX_PORT%</startargument>
+	<startargument>-Dcom.sun.management.jmxremote.authenticate=false</startargument>
+	<startargument>-Dcom.sun.management.jmxremote.ssl=false </startargument>
+	<startargument>-Dcom.sun.management.jmxremote.local.only=true</startargument>
+	<startargument>-Dspring.application.admin.enabled=true</startargument>
+	<startargument>-jar</startargument>
+	<startargument>%BASE%/../lib/${project.artifactId}.jar</startargument>
+	<startargument>--spring.config.location=%BASE%/../config/</startargument>
+	<startargument>--spring.profiles.active=%APP_ACTIVE_PROFILE%</startargument>
+
+	<stopexecutable>java</stopexecutable>
+	<stopargument>-Djava.io.tmpdir=%BASE%/../temp/</stopargument>
+	<stopargument>-Dcom.sun.management.jmxremote.local.only=true</stopargument>
+	<stopargument>-jar</stopargument>
+	<stopargument>%BASE%/../lib/parking-lot-springboot-servicestopper.jar</stopargument>
+	<stopargument>%APP_JMX_PORT%</stopargument>
+	
+	<workingdirectory>%BASE%/../</workingdirectory>
+	
+	<logpath>%BASE%/../log/</logpath>
+	<logmode>rotate</logmode>
+</service>

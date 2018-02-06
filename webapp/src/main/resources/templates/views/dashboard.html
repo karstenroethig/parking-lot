@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="ie9"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html>
+<!--<![endif]-->
+
+	<head>
+
+		<title th:text="#{application.name} + ' - ' + #{dashboard.label}"></title>
+
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+		<link rel="shortcut icon" th:href="@{/images/favicon.ico}"/>
+
+		<link th:replace="fragments/style"/>
+
+		<div th:replace="fragments/js"></div>
+
+	</head>
+
+	<body class="cards-pf" th:with="menu='dashboard'">
+
+		<div th:replace="fragments/header"></div>
+
+		<div class="container-fluid container-cards-pf">
+
+			<div class="row row-cards-pf">
+				<div class="col-xs-6 col-sm-4 col-md-2">
+					<div class="card-pf card-pf-accented card-pf-aggregate-status">
+						<h2 class="card-pf-title">
+							<a href="#"><span class="fa fa-rocket"></span> Angebotspositionen Gesamt</a>
+						</h2>
+						<div class="card-pf-body">
+							<p class="card-pf-aggregate-status-notifications">
+								<span class="card-pf-aggregate-status-notification">
+									<span th:text="${stats.totalOfferPositions}">[totalOfferPositions]</span>
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+
+	</body>
+</html>

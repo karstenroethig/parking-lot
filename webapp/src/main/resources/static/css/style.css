@@ -1,0 +1,22 @@
+
+h1 i {
+	color: #999;
+	font-size: 18px;
+	margin-left: 10px;
+}
+
+form {
+	margin-top: 20px;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.required {
+	color: #F00;
+}
+
+.numberColum {
+	text-align: right;
+}

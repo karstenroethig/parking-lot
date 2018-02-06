@@ -1,0 +1,15 @@
+[Unit]
+Description=${dist.service.name}
+After=syslog.target network.target
+Before=httpd.service
+
+[Service]
+EnvironmentFile=-/etc/${dist.service.id}/${dist.service.id}.conf
+User=$APP_USER
+LimitNOFILE=102642
+PIDFile=/var/run/${dist.service.id}/${dist.service.id}.pid
+ExecStart=/opt/${app.name.id}/bin/run.sh
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target

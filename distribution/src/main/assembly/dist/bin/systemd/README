@@ -1,0 +1,25 @@
+= How to configure ${app.name.pretty} as a systemd service
+
+== Create a ${dist.service.id} user
+
+    # groupadd -r ${dist.service.id}
+    # useradd -r -g ${dist.service.id} -d /opt/${app.name.id} -s /sbin/nologin ${dist.service.id}
+
+== Install ${app.name.pretty}
+
+    # mkdir /opt/${app.name.id}
+	# cd /opt/${app.name.id}
+	# tar -zxf ${project.artifactId}-${project.version}-bin.tar.gz -C /opt/${app.name.id}
+    # chown -R ${dist.service.id}:${dist.service.id} /opt/${app.name.id}
+
+== Configure systemd
+
+    # mkdir /etc/${dist.service.id}
+    # cp ${app.name.id}.conf /etc/${dist.service.id}/
+    # cp ${app.name.id}.service /etc/systemd/system/
+    # chmod +x /opt/${app.name.id}/bin/run.sh
+
+== Start and enable
+
+    # systemctl enable ${dist.service.id}.service
+    # systemctl start ${dist.service.id}.service

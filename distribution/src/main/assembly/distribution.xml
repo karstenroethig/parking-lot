@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+
+	<id>bin</id>
+	<formats>
+		<format>tar.gz</format>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+
+	<dependencySets>
+
+		<!-- Die durch Spring Boot generierte .jar-Datei (enthält bereits alle abhängigen Klassen). -->
+		<dependencySet>
+			<useProjectAttachments>true</useProjectAttachments>
+			<useTransitiveDependencies>false</useTransitiveDependencies>
+			<includes>
+				<include>${project.groupId}:parking-lot-webapp:jar</include>
+			</includes>
+			<outputFileNameMapping>${app.name.id}.${artifact.extension}</outputFileNameMapping>
+			<outputDirectory>lib</outputDirectory>
+		</dependencySet>
+
+		<!-- Windows Service Wrapper -->
+		<dependencySet>
+			<includes>
+				<include>com.sun.winsw:winsw:exe</include>
+			</includes>
+			<useTransitiveDependencies>false</useTransitiveDependencies>
+			<outputFileNameMapping>service.${artifact.extension}</outputFileNameMapping>
+			<outputDirectory>bin</outputDirectory>
+		</dependencySet>
+
+		<!-- Spring Boot Service Stopper -->
+		<dependencySet>
+			<includes>
+				<include>${project.groupId}:parking-lot-springboot-servicestopper:jar</include>
+			</includes>
+			<useTransitiveDependencies>false</useTransitiveDependencies>
+			<outputFileNameMapping>springboot-servicestopper.jar</outputFileNameMapping>
+			<outputDirectory>lib</outputDirectory>
+		</dependencySet>
+
+	</dependencySets>
+
+	<fileSets>
+
+		<!-- Die Verzeichnisstruktur inkl. einiger Standard-Dateien. -->
+		<fileSet>
+			<directory>${basedir}/src/main/assembly/dist/</directory>
+			<excludes>
+				<exclude>**/bin/run.conf.bat</exclude>
+				<exclude>**/bin/run.conf</exclude>
+				<exclude>**/bin/service.xml</exclude>
+				<exclude>**/bin/systemd/service.service</exclude>
+				<exclude>**/bin/systemd/service.conf</exclude>
+				<exclude>**/*.pdf</exclude>
+			</excludes>
+			<outputDirectory></outputDirectory>
+			<filtered>true</filtered>
+		</fileSet>
+
+		<!-- Übernahme von Dateien, die auf keinen Fall gefiltert werden dürfen. -->
+		<fileSet>
+			<directory>${basedir}/src/main/assembly/dist/</directory>
+			<includes>
+				<include>**/*.pdf</include>
+			</includes>
+			<outputDirectory></outputDirectory>
+			<filtered>false</filtered>
+		</fileSet>
+
+	</fileSets>
+
+	<files>
+
+		<!-- Übernahme von Dateien, die umbenannt werden müssen. -->
+		<file>
+			<source>${basedir}/src/main/assembly/dist/bin/run.conf.bat</source>
+			<outputDirectory>bin</outputDirectory>
+			<destName>run.conf.bat.bsp</destName>
+			<filtered>false</filtered>
+		</file>
+		<file>
+			<source>${basedir}/src/main/assembly/dist/bin/run.conf</source>
+			<outputDirectory>bin</outputDirectory>
+			<destName>run.conf.bsp</destName>
+			<filtered>false</filtered>
+		</file>
+		<file>
+			<source>${basedir}/src/main/assembly/dist/bin/service.xml</source>
+			<outputDirectory>bin</outputDirectory>
+			<destName>service.xml.bsp</destName>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>${basedir}/src/main/assembly/dist/bin/systemd/service.service</source>
+			<outputDirectory>bin/systemd</outputDirectory>
+			<destName>${app.name.id}.service</destName>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>${basedir}/src/main/assembly/dist/bin/systemd/service.conf</source>
+			<outputDirectory>bin/systemd</outputDirectory>
+			<destName>${app.name.id}.conf</destName>
+			<filtered>true</filtered>
+		</file>
+
+	</files>
+
+</assembly>

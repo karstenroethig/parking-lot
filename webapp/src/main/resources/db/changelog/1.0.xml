@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+	                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet id="1" author="roethig">
+
+		<!-- =============== -->
+		<!-- Table "Company" -->
+		<!-- =============== -->
+		<createTable tableName="Company">
+			<column name="id" type="${type.id}" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="vendor" type="boolean">
+				<constraints nullable="false"/>
+			</column>
+			<column name="archived" type="boolean">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		
+		<addUniqueConstraint tableName="Company" columnNames="name" constraintName="unique_company_name"/>
+
+		<!-- ====================== -->
+		<!-- Table "Offer_Position" -->
+		<!-- ====================== -->
+		<createTable tableName="Offer_Position">
+			<column name="id" type="${type.id}" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false"/>
+			</column>
+			<column name="name_offer" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="name_intern" type="varchar(255)">
+				<constraints nullable="true"/>
+			</column>
+			<column name="packing_unit" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="price" type="decimal(10,2)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="offer_number" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="vendor_id" type="${type.idRef}">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+	</changeSet>
+
+</databaseChangeLog>
